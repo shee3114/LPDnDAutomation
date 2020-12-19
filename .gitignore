@@ -1,0 +1,16 @@
+target/
+.classpath
+.project
+.settings
+logs/
+test-output/
+Report/
+config.properties
+pom
+<<<<<<< HEAD
+runAll
+=======
+runAll
+
+>>>>>>> 0c3c3e99da3276782bd1408d1f7c0dc02d9382ad
+/bin/

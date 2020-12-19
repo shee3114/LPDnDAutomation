@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+	<configuration>
+		<!-- document encoding -->
+		<encoding>UTF-8</encoding>
+
+		<!-- title of the document -->
+		<documentTitle>Automation Result</documentTitle>
+
+		<!-- report name - displayed at top-nav -->
+		<reportName> Automation Report - Selenium - </reportName>
+
+		<!-- report headline - displayed at top-nav, after reportHeadline -->
+		<reportHeadline> Selenium Execution </reportHeadline>
+
+		<!-- custom javascript -->
+		<scripts>
+            <![CDATA[
+               
+            ]]>
+		</scripts>
+
+		<!-- custom styles -->
+		<styles>
+            <![CDATA[
+                .featherlight .featherlight-content 
+            	{
+    				
+    				overflow:auto !important;
+    				background : none !important;
+				}
+
+		       .featherlight .featherlight-image 
+			   {
+					overflow:hidden	!important;
+					margin: auto !important;
+					background-position: center center !important;
+					background-size: contain !important;
+					width: 90% !important;
+					height: 90% !important;
+					background-repeat: no-repeat !important;
+			   }
+			   
+			   .featherlight .featherlight-close-icon
+			   {
+			      visibility: hidden !important;
+			   }
+            ]]>
+		</styles>
+	</configuration>
+</extentreports>

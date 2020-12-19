@@ -1,0 +1,124 @@
+package pages.login.dashboard.products.plans;
+
+import org.openqa.selenium.By;
+
+public class Plans_OR {
+
+	public static By addPlanButton = By.xpath("//mat-toolbar//span[contains(text(),'Add Plan')]");
+
+	public static By name = By.xpath("//input[@name='name']");
+
+	public static By ribbonName = By.xpath("//input[@name='ribbonName']");
+
+	public static By displayName = By.xpath("//input[@name='displayName']");
+
+	public static By description = By.xpath("//textarea[@name='description']");
+
+	public static By tagField = By.xpath("//input[contains(@id,'mat-chip')]");
+
+	public static By allDCChkBox = By.xpath("//mat-checkbox[@formcontrolname='forAllDCs']//input[@type='checkbox']");
+
+	public static By selectdDCChkBox = By.xpath("//mat-checkbox[@formcontrolname='forDC']//input[@type='checkbox']");
+
+	public static By allVarChkBox = By.xpath("//mat-checkbox[@formcontrolname='forAllVars']//input[@type='checkbox']");
+
+	public static By selectedVarChkBox = By
+			.xpath("//mat-checkbox[@formcontrolname='forVars']//input[@type='checkbox']");
+
+	public static By checkBoxLocator = By
+			.xpath("//mat-checkbox[@formcontrolname='%s']//input[@type='checkbox']//parent::div");
+
+	public static By addPlanFromGrid = By
+			.xpath("//mat-icon[contains(text(),'add_circle')]//parent::span//parent::button");
+
+	public static By planPopUpTitle = By.xpath("//div[@class='erp-title']//span");
+
+	public static By planForm = By.xpath("//erp-plan-form/div");
+
+	public static By meteredBillingChkBox = By.xpath("//mat-checkbox[@formcontrolname='meteredBilling']//input");
+
+	public static By meteredBillingChkBoxLocator = By.xpath("//mat-checkbox[@formcontrolname='meteredBilling']");
+
+	public static By basePrice = By.xpath("//input[@name='basePrice']");
+
+	public static By setUpPrice = By.xpath("//input[@name='setupCost']");
+
+	public static By billEvery = By.xpath("//input[@name='period']");
+
+	public static By trailDays = By.xpath("//input[@name='trialDays']");
+
+	public static By pricingModel = By.xpath("(//mat-select[@formcontrolname='pricingModel'])[1]");
+
+	public static By pricingUnit = By.xpath("(//mat-select[@formcontrolname='unit'])[2]");
+
+	public static By groupPricingModel = By.xpath("(//mat-select[@formcontrolname='pricingModel'])[2]");
+
+	public static By duration = By.xpath("(//mat-select[@formcontrolname='unit'])[1]");
+
+	public static By billingCycle = By.xpath("//input[@name='billingCycles']");
+
+	public static By planName = By.xpath("//table[contains(@class,'basic-table')]//tbody//tr//td[3]//span");
+
+	public static By upfrontCost = By.xpath("//input[@name='upfrontPayment.cost']");
+
+	public static By pricePerUnitField = By.xpath("(//input[@formcontrolname='price'])[2]");
+
+	public static By freeQtyField = By.xpath("//input[@formcontrolname='freeQuantity']");
+
+	public static By confirmationDialogContent = By.xpath("//erp-confirm-dialog//span[@class='erp-dialog-message']");
+
+	public static By publishButton = By.xpath("//erp-dialog-actions//button/span[contains(text(),'Publish')]");
+
+	public static By unpublishButton = By.xpath("//erp-dialog-actions//button/span[contains(text(),'Unpublish')]");
+
+	public static By cancelButton = By.xpath("//button//span[contains(text(),'Cancel')]");
+
+	public static By selectCustomers = By.xpath("//button//span[contains(text(),'Select Customers')]");
+
+	public static By selectVARs = By.xpath("//button//span[contains(text(),'Select VARs')]");
+
+	public static By assignCustomersToPlan = By.xpath("//mat-dialog-container");
+
+	public static By customerFilter = By.xpath("//input[contains(@placeholder,'Customer Name')]");
+
+	public static By selectBtn = By
+			.xpath("((//div[contains(@class,'cdk-drop-list')])[1]//div[contains(@class,'example-box')]//button)[1]");
+
+	public static By selectedCustomersCustomerID = By
+			.xpath("((//div[contains(@class,'cdk-drop-list')])[2]//div[contains(@class,'example-box')]//span)[2]");
+
+	public static By selectCustomerSectionList = By.xpath(
+			"((//div[contains(@class,'cdk-drop-list')])[1]//div[contains(@class,'example-box')])//span[contains(text(),'CS')]");
+
+	public static By selectedCustomersSectionList = By.xpath(
+			"((//div[contains(@class,'cdk-drop-list')])[2]//div[contains(@class,'example-box')])//span[contains(text(),'CS')]");
+
+	public static By assignCustomerSaveBtn = By
+			.xpath("//mat-dialog-container//span[contains(text(),'Save')]//parent::button");
+
+	public static By otherInformationTab = By
+			.xpath("//div[contains(@class,'mat-tab')]//div[contains(text(),'Other Information')]");
+
+	public static By planDetails = By.xpath(
+			"(//div[contains(@class,'element-detail')])[%s]//*[(self::span[contains(@class,'price') or contains(@class,'pl-value') or contains(@class,'pl-feature')]) | (self::div[contains(@class,'title') or contains(@class,'pl-status')])]");
+
+	public static By planNameLlink = By.xpath("//table//td//span[contains(text(),'%s')]");
+
+	public static By planRowDetails = By.xpath(
+			"(//table//tr[contains(@class,'clickable')])[%s]//td//span[contains(@class,'ng-star') or contains(@class,'cursor')]");
+
+	public static By viewAssignedVAR = By
+			.xpath("(//table//tr[contains(@class,'clickable')])[%s]//mat-icon[@mattooltip='View Assigned VARs']");
+
+	public static By viewAssingedDC = By
+			.xpath("(//table//tr[contains(@class,'clickable')])[%s]//mat-icon[@mattooltip='View Assigned Customers']");
+
+	public static By customerOverLay = By.xpath("//div[contains(@class,'cdk-overlay-pane')]");
+
+	public static By overlayTitle = By
+			.xpath("//div[contains(@class,'cdk-overlay-pane')]//span[contains(@class,'tc-blue')]");
+
+	public static By overlayCustomerList = By.xpath(
+			"//div[contains(@class,'cdk-overlay-pane')]//mat-divider//parent::div//div[contains(@class,'ng-star')]");
+
+}

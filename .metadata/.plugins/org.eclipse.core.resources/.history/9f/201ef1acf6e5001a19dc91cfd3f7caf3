@@ -1,0 +1,141 @@
+package suites.appsuites;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import pages.login.dashboard.Dashboard;
+import pages.login.dashboard.core.ERPConstant;
+import pages.login.dashboard.products.Products;
+import pages.login.dashboard.products.plans.Plans;
+import suites.basesuite.ERPBaseSuite;
+
+public class PlanSuite extends ERPBaseSuite {
+
+	Dashboard dashboard;
+	Plans plans;
+	Products products;
+
+	@BeforeTest
+	public void navigateToDashBoard() {
+		dashboard = createObject("Dashboard");
+		System.out.println("Before Test is exceucted successfully.");
+	}
+
+	@BeforeMethod
+	public void navigateToProductsModule() {
+		products = dashboard.navigateToModule(ERPConstant.PRODUCT_Mod);
+	}
+
+	/*
+	 * Method to add plan
+	 */
+	@Test(priority = 0, dataProvider = "multipleInput", enabled = false)
+	public void addPlan(String productName, String productTag, String planName, String ribbonName, String displayName,
+			String description, String planTag, String basePrice, String setUpPrice, String upfrontCost,
+			String applicableStatus, String meteredBilling, String licenseType, String pricingModel, String unit,
+			String billEvery, String trailDay, String billingCycle, String featureValue) {
+		plans = createObject("Plans");
+		plans.addPlan(productName, productTag, planName, ribbonName, displayName, description, planTag, basePrice,
+				setUpPrice, upfrontCost, applicableStatus, meteredBilling, licenseType, pricingModel, unit, billEvery,
+				trailDay, billingCycle, featureValue);
+	}
+
+	/*
+	 * Method to edit plan details
+	 */
+	@Test(priority = 1, dataProvider = "multipleInput", enabled = false)
+	public void editPlan(String productName, String productTag, String planName, String ribbonName, String displayName,
+			String description, String planTag, String basePrice, String setUpPrice, String meteredBilling,
+			String licenseType, String pricingModel, String unit, String billEvery, String trailDay,
+			String billingCycle, String upfrontCost, String upfrontStatus) {
+		plans = createObject("Plans");
+		plans.editPlan(productName, productTag, planName, ribbonName, displayName, description, planTag, basePrice,
+				setUpPrice, meteredBilling, licenseType, pricingModel, unit, billEvery, trailDay, billingCycle,
+				upfrontCost, upfrontStatus);
+	}
+
+	/*
+	 * Method to publish the plan
+	 */
+	@Test(priority = 2, dataProvider = "multipleInput", enabled = false)
+	public void publishPlans(String productName, String productTag, String planName) {
+		plans = createObject("Plans");
+		plans.publishPlans(productName, productTag, planName);
+	}
+
+	/*
+	 * Method to publishing the plan
+	 */
+	@Test(priority = 3, dataProvider = "multipleInput", enabled = false)
+	public void unpublishPlans(String productName, String productTag, String planName) {
+		plans = createObject("Plans");
+		plans.unpublishPlans(productName, productTag, planName);
+	}
+
+	/*
+	 * Method to create the plan for the selected Customers.
+	 */
+	@Test(priority = 4, dataProvider = "multipleInput", enabled = false)
+	public void createPlanWithSelectedCustomers(String productName, String productTag, String planName,
+			String selectVAR, String selectDC, String varID, String dcID) {
+		plans = createObject("Plans");
+		plans.createPlanWithSelectedCustomers(productName, productTag, planName, selectVAR, selectDC, varID, dcID);
+	}
+
+	/*
+	 * Method to verify the plan details
+	 */
+	@Test(priority = 5, dataProvider = "multipleInput", enabled = false)
+	public void verifyPlanDetails(String productName, String productTag, String planName, String displayName,
+			String setUpPrice, String upfrontCost, String meteredBilling, String trailDays,
+			String showPlanafterSubscription, String basePrice, String unit, String Pricing, String feature) {
+		plans = createObject("Plans");
+		plans.verifyPlanDetailsAfterExpansion(productName, productTag, planName, displayName, setUpPrice, upfrontCost,
+				meteredBilling, trailDays, showPlanafterSubscription, basePrice, unit, Pricing, feature);
+	}
+
+	@Test(priority = 6, dataProvider = "multipleInput", enabled = true)
+	public void verifyPlanDetailsInRow(String productName, String productTag, String planName, String basePrice,
+			String setUpPrice, String Pricing, String unit, String varID, String dcID) {
+		plans = createObject("Plans");
+		plans.verifyPlanDetailsInRow(productName, productTag, planName, basePrice, setUpPrice, Pricing, unit, varID,
+				dcID);
+	}
+
+	@Test(priority = 7, dataProvider = "multipleInput", enabled = true)
+	public void createPlanWithUnitPricingModel(String productName, String productTag, String planName,
+			String ribbonName, String displayName, String description, String planTag, String basePrice,
+			String setUpPrice, String upfrontCost, String applicableStatus, String meteredBilling, String licenseType,
+			String pricingModel, String unit, String pricePerUnit, String freeQuantity, String billEvery,
+			String trailDay, String billingCycle, String featureValue) {
+		plans = createObject("Plans");
+		plans.addPlan(productName, productTag, planName, ribbonName, displayName, description, planTag, basePrice,
+				setUpPrice, upfrontCost, applicableStatus, meteredBilling, licenseType, pricingModel, unit,pricePerUnit, freeQuantity, billEvery,
+				trailDay, billingCycle, featureValue);
+	}
+
+	/*
+	 * Method to delete the plan
+	 */
+	@Test(priority = 6, dataProvider = "multipleInput", enabled = false)
+	public void deletePlan(String productName, String productTag, String planName) {
+		plans = createObject("Plans");
+		plans.deletePlan(productName, productTag, planName);
+	}
+
+	@AfterMethod
+	public void navigateToDashboard() {
+		products = createObject("Products");
+		products.removeProductFilter();
+	}
+
+	@AfterTest
+	public void navigateDashboard() {
+		// dashboard.navigateToModule("Dashboard");
+		System.out.println("AfterTest is executed successfully.");
+	}
+
+}
