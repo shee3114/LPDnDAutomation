@@ -1,10 +1,8 @@
 package pages.login.dashboard.masters.addressMaster.city;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import base.BaseComponent;
 import framework.reporter.ScreenshotType;
@@ -28,16 +26,45 @@ public class City extends BaseComponent {
 		// Create the object for "Common Functions"
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
-		// Create the object for "City"
+		// Create the object for "City".
 		if (Objects.isNull(city)) {
 			city = createObject(DistricoConstant.CITY);
 		}
+
+		// Verify the fields of city master.
+		city.verifyCityMasterFields();
 
 		// Add data to mandatory fields for creating city
 		city.addCity(countryName, stateName, cityName);
 
 		// Verify Notification
 		commonFunctions.verifyNotification("City added successfully.");
+
+		// Refresh the page
+		refreshPage();
+	}
+
+	/*
+	 * Method to check fields of city master which are by default enabled or not.
+	 */
+
+	public void verifyCityMasterFields() {
+
+		// Verify if 'Country' drop-down is by default enabled or not.
+		boolean countryField = isElementEditable(Shared_OR.countryDropDown);
+		if (countryField) {
+			RESULT.PASS("Successfully verified that 'Country' drop-down is by default enabled.", true,
+					ScreenshotType.browser);
+		} else {
+			RESULT.FAIL("Failed because 'Country' field is not by default enabled.", true, ScreenshotType.browser);
+		}
+		// Verify if 'state' drop-down is by default enabled or not.
+		boolean stateField = isElementEnabled(Shared_OR.stateDropDown);
+		if (!stateField) {
+			RESULT.PASS("Successfully checked that 'State' field is by default disabled", true, ScreenshotType.browser);
+		} else {
+			RESULT.FAIL("Failed because 'State' field is by default enabled.", true, ScreenshotType.browser);
+		}
 
 	}
 
@@ -46,11 +73,6 @@ public class City extends BaseComponent {
 	 */
 	public void editCity(String cityNameToSearch, String cityNameToEdit) {
 
-		// Create the object for "City"
-		if (Objects.isNull(city)) {
-			city = createObject(DistricoConstant.CITY);
-		}
-
 		// Create the object of "Common Functions"
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
@@ -58,7 +80,7 @@ public class City extends BaseComponent {
 		commonFunctions.waitTillVisbilityOfElement(City_OR.city);
 
 		// Click on Edit button
-		city.clickOnEditButton(cityNameToSearch);
+		commonFunctions.clickOnEditButton(cityNameToSearch, City_OR.cityColumn);
 
 		// Verify if the 'Save' button is available or not.
 		boolean flag = isElementExists(Shared_OR.saveButton);
@@ -66,7 +88,7 @@ public class City extends BaseComponent {
 			RESULT.PASS("Successfully checked that row is editable.", true, ScreenshotType.browser);
 
 			// Edit the data of the "City" field
-			setValue(City_OR.city, cityNameToEdit);
+			setValue(City_OR.editableCity, cityNameToEdit);
 
 			// Click on save
 			click(Shared_OR.saveButton);
@@ -76,25 +98,8 @@ public class City extends BaseComponent {
 		} else {
 			RESULT.FAIL("Failed to edit the city because row is not editable.", true, ScreenshotType.browser);
 		}
-	}
-
-	/*
-	 * Method to click on the edit button of the selected row.
-	 */
-	public void clickOnEditButton(String cityNameToSearch) {
-		// Get the list of the of 'Short Name' column list
-		List<WebElement> cityNameColumnData = getList(City_OR.cityColumn);
-		for (int i = 0; i < cityNameColumnData.size() - 1; i++) {
-			String data = cityNameColumnData.get(i).getText();
-			String dataWithoutSpace = data.trim();
-			if (dataWithoutSpace.equals(cityNameToSearch)) {
-				i = i + 1;
-				String number = String.valueOf(i);
-				By cityEditBtn = getLocator(City_OR.cityEditBtn, number);
-				click(cityEditBtn);
-				break;
-			}
-		}
+		// Refresh the page
+		refreshPage();
 	}
 
 	/*
@@ -123,7 +128,8 @@ public class City extends BaseComponent {
 		} else {
 			RESULT.FAIL("Failed because system is allowing to add duplicate city.", true, ScreenshotType.browser);
 		}
-
+		// Refresh the page
+		refreshPage();
 	}
 
 	/*
@@ -132,15 +138,17 @@ public class City extends BaseComponent {
 	public void addCity(String countryName, String stateName, String cityName) {
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
-		// Wait till the loading the "City" master
-		commonFunctions.waitTillVisbilityOfElement(City_OR.city);
+		// Wait till the 'City' grid is visible on the page.
+		commonFunctions.waitTillVisbilityOfElement(City_OR.cityGrid);
 
 		// Verify if the 'City field' is available or not.
 		boolean flag = isElementExists(City_OR.city);
 		if (flag) {
 
-			// Select Country ad State from drop-down.
+			// Select the Country value from drop-down.
 			commonFunctions.selectValueFromDropdown(Shared_OR.countryDropDown, countryName);
+
+			// Select the City value from drop-down.
 			commonFunctions.selectValueFromDropdown(Shared_OR.stateDropDown, stateName);
 
 			// Enter the data into the city field.
@@ -152,6 +160,27 @@ public class City extends BaseComponent {
 		} else {
 			RESULT.FAIL("Failed because 'City' field is not available.", true, ScreenshotType.browser);
 		}
+	}
 
+	public void deleteCity(String cityToDelete) {
+		// Create the object for the "Common Functions
+		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
+
+		By deleteButton = getLocator(City_OR.deleteButton, cityToDelete);
+
+		boolean flag = isElementExists(deleteButton);
+		if (flag) {
+
+			// Click on delete button.
+			commonFunctions.delteItem(deleteButton, cityToDelete, "City");
+
+			// Verify notification.
+			commonFunctions.verifyNotification("City removed successfully.");
+
+			// Refresh the page.
+			refreshPage();
+		} else {
+			RESULT.FAIL("Failed because delete button was not available for record. ", true, ScreenshotType.browser);
+		}
 	}
 }

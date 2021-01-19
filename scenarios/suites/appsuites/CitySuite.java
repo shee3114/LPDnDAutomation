@@ -24,7 +24,6 @@ public class CitySuite extends LPDndBaseSuite {
 	public void addCity(String countryName, String stateName, String cityName) {
 		city = createObject(DistricoConstant.CITY);
 		city.addNewCity(countryName, stateName, cityName);
-
 	}
 
 	@Test(priority = 2, dataProvider = "multipleInput", enabled = true)
@@ -38,6 +37,12 @@ public class CitySuite extends LPDndBaseSuite {
 	public void verificationForDuplicateCity(String countryName, String stateName, String cityName) {
 		city = createObject(DistricoConstant.CITY);
 		city.verificationForDuplicateCity(countryName, stateName, cityName);
+	}
+
+	@Test(priority = 4, dataProvider = "multipleInput", enabled = true)
+	public void deleteCity(String cityToDelete) {
+		city = createObject(DistricoConstant.CITY);
+		city.deleteCity(cityToDelete);
 	}
 
 	@AfterTest

@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 public class State_OR {
 	public static By stateMenu = By.xpath("//a[contains(text(),'State')]");
 
+	public static By stateGrid = By.xpath("//table[contains(@id,'GridViewState')]");
+
 	public static By stateName = By.xpath("//input[contains(@name,'BoxState')]");
 
 	public static By stateShortName = By.xpath("//input[contains(@name,'BoxShortName')]");

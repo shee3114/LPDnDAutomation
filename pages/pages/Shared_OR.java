@@ -8,6 +8,8 @@ public class Shared_OR {
 
 	public static By addressMenu = By.xpath("//a[contains(text(),'Address')]");
 
+	public static By productMenu = By.xpath("(//a[@class ='subMenuItem' and (text()='Product')])[1]");
+
 	public static By homeMenu = By.xpath("//a[contains(text(),'Home')]");
 
 	public static By notification = By.xpath("//span[contains(@id,'LabelExceptionMessage')]");
@@ -16,17 +18,32 @@ public class Shared_OR {
 
 	public static By addBtn = By.xpath("//span[text()='Add']");
 
+	public static By addLink = By.xpath("//a[contains(@title,'Click here to add')]");
+
+	public static By closelink = By.xpath("//a[contains(@id,'LinkClose')]");
+
 	public static By editBtn = By.xpath("//a[contains(@id,'LinkEdit')]");
+
+	// This edit button locator to click on edit button for specific row.
+	public static By editButton = By.xpath("(//a[contains(@id,'LinkEdit')])[%s]");
 
 	public static By saveButton = By.xpath("//table//a[contains(@id,'LinkUpdate')]");
 
-	public static By countryDropDown = By.xpath("//select[contains(@id,'ListCountry')]");
+	public static By deleteButton = By.xpath(
+			"//tr[td//a[@title='Click here to delete'] and td[contains(text(),'%s')]]//a[@title='Click here to delete']");
 
-	public static By stateDropDown = By.xpath("//select[contains(@id,'ListState')]");
+	public static By countryDropDown = By.xpath("//td[@class='topalign']//select[contains(@id,'ListCountry')]");
+
+	public static By stateDropDown = By.xpath("//td[@class='topalign']//select[contains(@id,'ListState')]");
+
+	public static By cityDropDown = By.xpath("//td[@class='topalign']//select[contains(@id,'ListCity')]");
 
 	public static By centreTypeDropDown = By.xpath("//select[contains(@id,'ListCentreType')]");
 
 	public static By centreDropDown = By.xpath("(//select[contains(@id,'ListCentre')])[2]");
+
+	public static By productGroupDropDown = By
+			.xpath("//td[@class='topalign']//select[contains(@name,'ListProductGroup')]");
 
 	// --------------------------------- Ignore below locator
 
@@ -40,7 +57,8 @@ public class Shared_OR {
 
 	public static By saveBtn = By.xpath("//span[contains(text(),'Save')]//parent::button");
 
-	public static By editButton = By.xpath("//button/span[contains(text(),'Edit')]");
+	// public static By editButton =
+	// By.xpath("//button/span[contains(text(),'Edit')]");
 
 	public static By yesDoBtn = By.xpath("//button/span[contains(text(),'Yes, Do it.')]");
 
@@ -76,7 +94,8 @@ public class Shared_OR {
 
 	public static By cancelButton = By.xpath("//button//mat-icon[contains(text(),'cancel')]");
 
-	public static By deleteButton = By.xpath("//button//span[contains(text(),'Delete')]");
+	// public static By deleteButton =
+	// By.xpath("//button//span[contains(text(),'Delete')]");
 
 	public static By feature = By.xpath("//input[@name='features']");
 

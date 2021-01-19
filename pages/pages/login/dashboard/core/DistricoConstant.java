@@ -23,6 +23,18 @@ public class DistricoConstant {
 
 	public static final String AREA = "Area";
 
+	public static final String SUBAREA = "SubArea";
+
+	public static final String PINCODE = "PinCode";
+	
+	public static final String PRODUCT_GROUP = "ProductGroup";
+
+	public static final String PRODUCT = "Product";
+
+	public static final String PRODUCT_STAGE = "ProductStage";
+
+	public static final String PRODUCT_BRAND = "ProductBrand";
+
 	public static final String DASHBOARD = "Dashboard";
 
 }

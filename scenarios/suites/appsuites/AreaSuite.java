@@ -14,7 +14,7 @@ public class AreaSuite extends LPDndBaseSuite {
 	Area area;
 
 	@BeforeTest
-	public void navigateToStateMaster() {
+	public void navigateToAreaMaster() {
 		dashboard = createObject(DistricoConstant.DASHBOARD);
 		dashboard.navigateToModule(DistricoConstant.AREA);
 	}
@@ -25,9 +25,10 @@ public class AreaSuite extends LPDndBaseSuite {
 		area.addNewArea(centreType, centre, areaName, population, areaShortName);
 	}
 
-	@Test(priority = 2, dataProvider = "multipleInput", enabled = false)
-	public void editArea() {
+	@Test(priority = 2, dataProvider = "multipleInput", enabled = true)
+	public void editArea(String areaToSearch, String areaToEdit, String population, String areaShortName) {
 		area = createObject(DistricoConstant.AREA);
+		area.editArea(areaToSearch, areaToEdit, population, areaShortName);
 	}
 
 	@Test(priority = 3, dataProvider = "multipleInput", enabled = true)
@@ -35,6 +36,12 @@ public class AreaSuite extends LPDndBaseSuite {
 			String areaShortName) {
 		area = createObject(DistricoConstant.AREA);
 		area.verificationForDuplicateArea(centreType, centre, areaName, population, areaShortName);
+	}
+
+	@Test(priority = 4, dataProvider = "multipleInput", enabled = true)
+	public void deleteArea(String areaToDelete) {
+		area = createObject(DistricoConstant.AREA);
+		area.deleteArea(areaToDelete);
 	}
 
 	@AfterTest

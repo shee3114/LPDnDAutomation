@@ -15,9 +15,11 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Ignore;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -32,6 +34,7 @@ import framework.reporter.ScreenshotType;
 import pages.login.Login;
 import pages.login.Login_OR;
 import pages.login.dashboard.core.DistricoConstant;
+import pages.login.dashboard.masters.addressMaster.area.Area_OR;
 import suites.basesuite.LPDndBaseSuite;
 
 public class CommonFunctions extends BaseComponent {
@@ -2767,10 +2770,16 @@ public class CommonFunctions extends BaseComponent {
 		// Initialization for the Select Class
 		Select select = new Select(element);
 
-		try {
-			select.selectByVisibleText(value);
-		} catch (NoSuchElementException e) {
-			System.out.println(("Failed to select " + value + " from dropdown."));
+		// Verify if the dropDown field is enabled or not
+		boolean flag = isElementEnabled(dropDownLocator);
+		if (flag) {
+			try {
+				select.selectByVisibleText(value);
+			} catch (NoSuchElementException e) {
+				System.out.println(("Failed to select " + value + " from dropdown."));
+			}
+		} else {
+			RESULT.FAIL("Failed because dropdown filed is not enabled.", true, ScreenshotType.browser);
 		}
 	}
 
@@ -2782,10 +2791,75 @@ public class CommonFunctions extends BaseComponent {
 		String actualNotification = getTextOfWebElement(Shared_OR.notification);
 		if (actualNotification.equals(expectedNotification)) {
 			flag = true;
-			RESULT.PASS("Message contenct of the notification is matched successfully.", true, ScreenshotType.browser);
+			RESULT.PASS("Message content of the notification is matched successfully.", true, ScreenshotType.browser);
 		} else {
 			RESULT.FAIL("Failed to matched the message content of the notification.", true, ScreenshotType.browser);
 		}
 		return flag;
 	}
+
+	/*
+	 * Method to click on the edit button of the selected row.
+	 */
+	public void clickOnEditButton(String dataToSearch, By columnLocator) {
+		// Get the list of the of 'Short Name' column list
+		List<WebElement> ColumnData = getList(columnLocator);
+		for (int i = 0; i <= ColumnData.size() - 1; i++) {
+			String data = ColumnData.get(i).getText();
+			String dataWithoutSpace = data.trim();
+
+			if (dataWithoutSpace.equals(dataToSearch)) {
+				i = i + 1;
+				String number = String.valueOf(i);
+				By EditBtn = getLocator(Shared_OR.editButton, number);
+				click(EditBtn);
+				break;
+			}
+		}
+	}
+
+	/*
+	 * Method to click on the delete button of the selected row.
+	 */
+	public void delteItem(By deleteButton, String dataToSearch, String itemToDelete) {
+
+		// Check if the element is exist or not
+		boolean flag = isElementExists(deleteButton);
+		if (flag) {
+			// click on delete button
+			click(deleteButton);
+
+			// Check if the confirmation message is showing or not.
+			boolean isAlertPresent = isAlertPresent(20, true);
+
+			if (isAlertPresent) {
+				String messageContent = getAlertText();
+				System.out.println(messageContent);
+
+				if (messageContent.equals("Are you sure, you want to delete this " + itemToDelete + "?")) {
+					acceptAlert();
+				} else {
+					RESULT.FAIL("Failed because to match delete confimraiton message.", true, ScreenshotType.browser);
+				}
+			}
+		} else {
+			RESULT.FAIL("Failed because 'Delete' button is not available for the given record.", true,
+					ScreenshotType.browser);
+		}
+	}
+
+	public void acceptAlert() {
+		try {
+
+			// switch to Alert
+			Alert alert = driver.switchTo().alert();
+
+			// Enter Keys in the Alert Text Box
+			alert.accept();
+
+		} catch (NoAlertPresentException e) {
+			RESULT.ERROR("Exception occurred in checking Alert", e, false, ScreenshotType.fullScreen);
+		}
+	}// end of acceptAlert
+
 }

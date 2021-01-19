@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 public class Country_OR {
 	public static By countryMenu = By.xpath("//a[contains(text(),'Country')]");
 
+	public static By countryGrid = By.xpath("//table[contains(@id,'GridViewCountr')]");
+
 	public static By countryName = By.xpath("//input[contains(@id,'TextBoxCountry')]");
 
 	public static By countryShortName = By.xpath("//input[contains(@id,'TextBoxShortName')]");

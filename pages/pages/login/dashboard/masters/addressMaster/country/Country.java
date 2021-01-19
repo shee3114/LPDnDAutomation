@@ -1,10 +1,8 @@
 package pages.login.dashboard.masters.addressMaster.country;
 
-import java.util.List;
 import java.util.Objects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import base.BaseComponent;
 import framework.reporter.ScreenshotType;
@@ -28,31 +26,39 @@ public class Country extends BaseComponent {
 		// Create the object for the "Common Functions
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
+		// Create the object for the 'Country'
 		if (Objects.isNull(country)) {
-			country = createObject("Country");
+			country = createObject(DistricoConstant.COUNTRY);
 		}
 
-		country.addCountry(countryName, countryShortName);
+		boolean flag = country.addCountry(countryName, countryShortName);
+		if (flag) {
 
-		// Verify Notification.
-		commonFunctions.verifyNotification("Country added successfully.");
+			// Verify Notification.
+			boolean notification = commonFunctions.verifyNotification("Country added successfully.");
+			if (notification) {
+				RESULT.PASS("New entry of country is added successfully.", true, ScreenshotType.browser);
+			}
+		} else {
+			RESULT.FAIL("Failed to add the data to Mandatory fields for country.", true, ScreenshotType.browser);
+		}
+
+		// Refresh the page.
+		refreshPage();
 	}
 
 	/*
 	 * Method to edit data of the existing country
 	 */
-
 	public void editCountry(String shortNameToSearch, String countryName, String countryShortName) {
 
 		// Create the object for the "Common Functions
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
-		if (Objects.isNull(country)) {
-			country = createObject("Country");
-		}
+		commonFunctions.waitTillVisbilityOfElement(Country_OR.countryName);
 
 		// Click on Edit button
-		country.clickOnEditButton(shortNameToSearch);
+		commonFunctions.clickOnEditButton(shortNameToSearch, Country_OR.shortNameColumn);
 
 		// For verifying if the save button is enabled or not
 		boolean flag = isElementExists(Country_OR.saveButton);
@@ -64,101 +70,170 @@ public class Country extends BaseComponent {
 			click(Country_OR.saveButton);
 
 			// Verify Notification
-			commonFunctions.verifyNotification("Country updated successfully.");
+			boolean notification = commonFunctions.verifyNotification("Country updated successfully.");
+			if (notification) {
+				RESULT.PASS("Existing entry of country is edited Successfully.", true, ScreenshotType.browser);
+			}
 		} else {
 			RESULT.FAIL("Failed because row is not editable.", true, ScreenshotType.browser);
 		}
-	}
-
-	/*
-	 * Method to click on edit button of selected row
-	 */
-	public void clickOnEditButton(String shortName) {
-
-		// Get the list of the of 'Short Name' column list
-		List<WebElement> shortNamecolumnData = getList(Country_OR.shortNameColumn);
-		for (int i = 0; i < shortNamecolumnData.size() - 1; i++) {
-			String data = shortNamecolumnData.get(i).getText();
-			String dataWithoutSpace = data.trim();
-			if (dataWithoutSpace.equals(shortName)) {
-				i = i + 1;
-				String number = String.valueOf(i);
-				By countryEditBtn = getLocator(Country_OR.editButton, number);
-				click(countryEditBtn);
-				break;
-			}
-		}
-	}
-
-	public void clickOnDeleteButton(String shortName) {
-		// Get the list of the 'Total Delete Buttons'.
-		List<WebElement> totalDeleteButtons = getList(Country_OR.totalDeleteButtons);
-
-		// Get the list of the of 'Short Name' column list
-		List<WebElement> shortNamecolumnData = getList(Country_OR.shortNameColumn);
-
-		for (int i = 0; i < totalDeleteButtons.size() - 1; i++) {
-			String data = shortNamecolumnData.get(i).getText();
-			String dataWithoutSpace = data.trim();
-			if (dataWithoutSpace.equals(shortName)) {
-				i = i + 1;
-				String number = String.valueOf(i);
-				By countryDeleteBtn = getLocator(Country_OR.deleteBtn, number);
-				click(countryDeleteBtn);
-				break;
-			}
-		}
+		// Refresh the page.
+		refreshPage();
 	}
 
 	/*
 	 * Method to add data to mandatory fields of country form.
 	 */
-	public void addCountry(String countryName, String countryShortName) {
+	public boolean addCountry(String countryName, String countryShortName) {
+
+		boolean flag = false;
 
 		// Create the object for the "Common Functions
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
-		// Add Data to "Country Name" field
-		commonFunctions.waitTillVisbilityOfElement(Country_OR.countryName);
+		// Wait till the 'Country' grid is visible on the page.
+		commonFunctions.waitTillVisbilityOfElement(Country_OR.countryGrid);
 
-		boolean flag = isElementExists(Country_OR.countryName);
-		if (flag) {
+		// Check if the 'Country Name' field is exist on the page or not.
+		boolean countryNameField = isElementExists(Country_OR.countryName);
+		if (countryNameField) {
 			commonFunctions.setValue(Country_OR.countryName, countryName);
 
 			commonFunctions.setValue(Country_OR.countryShortName, countryShortName);
 
 			// Click on Add Button.
 			commonFunctions.click(Shared_OR.addBtn);
+
+			flag = true;
 		} else {
 			RESULT.FAIL("Failed because 'Contry Name' field is not exist on the page.", true, ScreenshotType.browser);
+		}
+		return flag;
+	}
+
+	/*
+	 * Method to delete the existing record of the country.
+	 */
+	public void delteCountry(String countryToDelete) {
+		// Create the object for the "Common Functions
+		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
+
+		By deleteButton = getLocator(Shared_OR.deleteButton, countryToDelete);
+
+		boolean flag = isElementExists(deleteButton);
+		if (flag) {
+
+			// Click on delete button
+			commonFunctions.delteItem(deleteButton, countryToDelete, "Country");
+
+			// Verify notification
+			boolean notification = commonFunctions.verifyNotification("Country removed successfully.");
+			if (notification) {
+				RESULT.PASS("The entry of country is deleted successfully.", true, ScreenshotType.browser);
+			}
+			// Refresh the page.
+			refreshPage();
+		} else {
+			RESULT.FAIL("Failed because 'delete' button was not available for the record.", true,
+					ScreenshotType.browser);
 		}
 	}
 
 	/*
-	 * Method to verify if the system is allowed to add the duplicate entry of the
-	 * country or not
+	 * Generic Method to verify duplicate country.
 	 */
-
-	public void verificationForDuplicateCountry(String countryName, String countryShortName) {
+	public boolean verificationForduplicateData(String countryName, String countryShortName,
+			String expectedNotification) {
+		boolean flag = false;
 
 		// Create the object for the "Common Functions
 		commonFunctions = createObject(DistricoConstant.COMMON_FUNCTIONS);
 
+		// Create object for 'Country' field.
 		if (Objects.isNull(country)) {
-			country = createObject("Country");
+			country = createObject(DistricoConstant.COUNTRY);
+		}
+		// Add data to mandatory fields of the country
+		boolean addCountry = country.addCountry(countryName, countryShortName);
+		if (addCountry) {
+			boolean notification = commonFunctions.verifyNotification(expectedNotification);
+			if (notification) {
+				flag = true;
+			}
+		} else {
+			RESULT.FAIL("Failed to add the data to Mandatory fields for country.", true, ScreenshotType.browser);
+		}
+		refreshPage();
+		return flag;
+	}
+
+	/*
+	 * Method to verify functionality of adding country with already existing
+	 * countryName
+	 */
+	public void addCountryWithDuplicateCountryName(String countryName, String countryShortName,
+			String expectedNotification) {
+
+		// Create object for 'Country' field.
+		if (Objects.isNull(country)) {
+			country = createObject(DistricoConstant.COUNTRY);
 		}
 
-		// Add data to "Country Name" field.
-		country.addCountry(countryName, countryShortName);
-
-		// Verify Notification
-		boolean flag = commonFunctions.verifyNotification("Country name and Short name already exists !");
-
+		boolean flag = country.verificationForduplicateData(countryName, countryShortName, expectedNotification);
 		if (flag) {
-			RESULT.PASS("Successfully verified that system is not allowed to add duplicate country.", true,
-					ScreenshotType.browser);
+			RESULT.PASS(
+					"Successfully verified that system is not allowed to add country with already existing country Name.",
+					true, ScreenshotType.browser);
 		} else {
-			RESULT.FAIL("Failed because system is allowing to add duplicate country.", true, ScreenshotType.browser);
+			RESULT.FAIL("Failed because system is allowing to add country with already existing country Name", true,
+					ScreenshotType.browser);
+		}
+	}
+
+	/*
+	 * Method to verify functionality of adding country with already existing
+	 * country Short Name
+	 */
+	public void addCountryWithDuplicateCountryShortName(String countryName, String countryShortName,
+			String expectedNotification) {
+
+		// Create object for 'Country' field.
+		if (Objects.isNull(country)) {
+			country = createObject(DistricoConstant.COUNTRY);
+		}
+
+		boolean flag = country.verificationForduplicateData(countryName, countryShortName, expectedNotification);
+		if (flag) {
+			RESULT.PASS(
+					"Successfully verified that system is not allowed to add country with already existing Country Short Name.",
+					true, ScreenshotType.browser);
+		} else {
+			RESULT.FAIL("Failed because system is allowing to add country with already existing Country Short Name",
+					true, ScreenshotType.browser);
+		}
+	}
+
+	/*
+	 * Method to verify functionality of adding country with already existing
+	 * country Name and Country Short Name
+	 */
+	public void addCountryWithDuplicateCountryNameAndCountryShortName(String countryName, String countryShortName,
+			String expectedNotification) {
+
+		// Create object for 'Country' field.
+		if (Objects.isNull(country)) {
+			country = createObject(DistricoConstant.COUNTRY);
+		}
+
+		boolean flag = country.verificationForduplicateData(countryName, countryShortName, expectedNotification);
+		if (flag) {
+			RESULT.PASS(
+					"Successfully verified that system is not allowed to add country with already existing Country Name and short Name.",
+					true, ScreenshotType.browser);
+		} else {
+			RESULT.FAIL(
+					"Failed because system is allowing to add country with already existing Country Name and Short Name. ",
+					true, ScreenshotType.browser);
 		}
 	}
 }

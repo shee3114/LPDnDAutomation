@@ -19,23 +19,75 @@ public class StateSuite extends LPDndBaseSuite {
 		dashboard.navigateToModule(DistricoConstant.STATE);
 	}
 
+	/*
+	 * Method to add new entry of 'State'
+	 */
 	@Test(priority = 1, dataProvider = "multipleInput", enabled = true)
 	public void addState(String countryName, String stateName, String stateShortName, String gstCode) {
-		State state = createObject(DistricoConstant.STATE);
+		state = createObject(DistricoConstant.STATE);
 		state.addNewState(countryName, stateName, stateShortName, gstCode);
 	}
 
+	/*
+	 * Method to edit existing State Record.
+	 */
 	@Test(priority = 2, dataProvider = "multipleInput", enabled = true)
 	public void editState(String stateName, String stateShortName, String gstCode, String shortNameForSearch) {
-		State state = createObject(DistricoConstant.STATE);
+		state = createObject(DistricoConstant.STATE);
 		state.editState(stateName, stateShortName, gstCode, shortNameForSearch);
 	}
 
+	/*
+	 * Method to verify 'Add State' functionality with already existing State Name.
+	 */
 	@Test(priority = 3, dataProvider = "multipleInput", enabled = true)
-	public void verificationForDuplicateState(String countryName, String stateName, String stateShortName,
-			String gstCode) {
-		State state = createObject(DistricoConstant.STATE);
-		state.verificationForDuplicateState(countryName, stateName, stateShortName, gstCode);
+	public void addStateWthExistingStateName(String countryName, String stateName, String stateShortName,
+			String gstCode, String expectedNotification) {
+		state = createObject(DistricoConstant.STATE);
+		state.addStateWithDuplicateStateName(countryName, stateName, stateShortName, gstCode, expectedNotification);
+	}
+
+	/*
+	 * Method to verify 'Add State' functionality with already existing State Short
+	 * Name.
+	 */
+	@Test(priority = 4, dataProvider = "multipleInput", enabled = true)
+	public void addStateWthExstingStateShrtName(String countryName, String stateName, String stateShortName,
+			String gstCode, String expectedNotification) {
+		state = createObject(DistricoConstant.STATE);
+		state.addStateWithDuplicateStateShortName(countryName, stateName, stateShortName, gstCode,
+				expectedNotification);
+	}
+
+	/*
+	 * Method to verify 'Add State' functionality with already existing GST Code.
+	 */
+	@Test(priority = 5, dataProvider = "multipleInput", enabled = true)
+	public void addStateWthExistingGstCode(String countryName, String stateName, String stateShortName, String gstCode,
+			String expectedNotification) {
+		state = createObject(DistricoConstant.STATE);
+		state.addStateWithDuplicateGstCode(countryName, stateName, stateShortName, gstCode, expectedNotification);
+	}
+
+	/*
+	 * Method to verify 'Add State' functionality with already existing 'State
+	 * Name', 'State Short Name' and 'GST Code'
+	 */
+	@Test(priority = 6, dataProvider = "multipleInput", enabled = true)
+	public void addStatWthExistingStatNamAndGst(String countryName, String stateName, String stateShortName,
+			String gstCode, String expectedNotification) {
+		state = createObject(DistricoConstant.STATE);
+		state.addStateWithDuplicateStateNameShortNameAndGST(countryName, stateName, stateShortName, gstCode,
+				expectedNotification);
+	}
+
+	/*
+	 * Method to delete the existing state
+	 */
+	@Test(priority = 7, dataProvider = "multipleInput", enabled = true)
+	public void deleteState(String stateToDelete) {
+		state = createObject(DistricoConstant.STATE);
+		state.deleteState(stateToDelete);
 	}
 
 	@AfterTest
