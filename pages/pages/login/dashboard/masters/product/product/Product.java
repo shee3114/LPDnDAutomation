@@ -143,10 +143,16 @@ public class Product extends BaseComponent {
 		boolean flag = product.addProduct(company, productGroup, productName, aliasName);
 
 		if (flag) {
-			commonFunctions.verifyNotification("Product has already been added!");
-		} else {
-			RESULT.FAIL("Failed because system is allowed to add the product which is already exist in the system.",
-					true, ScreenshotType.browser);
+			boolean notification = commonFunctions.verifyNotification("Product has already been added!");
+
+			if (notification) {
+				RESULT.PASS(
+						"Verified that system is not allowed to add 'Product' which is already exists in the system.",
+						true, ScreenshotType.browser);
+			} else {
+				RESULT.FAIL("Failed because system is allowed to add 'Product' which is already exists in the system. ",
+						true, ScreenshotType.browser);
+			}
 		}
 
 		// Refresh the page.

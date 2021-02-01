@@ -121,7 +121,6 @@ public class ProductStage extends BaseComponent {
 		} else {
 			RESULT.FAIL("Failed because delete button was not available for record. ", true, ScreenshotType.browser);
 		}
-
 	}
 
 	public void verificationForDuplicateProductStage(String productGroup, String productStageData) {
@@ -136,10 +135,15 @@ public class ProductStage extends BaseComponent {
 
 		if (flag) {
 			// Verify Notification.
-			commonFunctions.verifyNotification("Product Stage has already been added!");
+			boolean notification = commonFunctions.verifyNotification("Product Stage has already been added!");
 
-		} else {
-			RESULT.FAIL("Failed to add new entry of Product Stage.", true, ScreenshotType.browser);
+			if (notification) {
+				RESULT.PASS("Verified that system is not allowed to add duplicate entry product Stage'.", true,
+						ScreenshotType.browser);
+			} else {
+				RESULT.FAIL("Failed because system is allowing to add duplicate entry product Stage'.", true,
+						ScreenshotType.browser);
+			}
 		}
 		// Refresh page.
 		refreshPage();

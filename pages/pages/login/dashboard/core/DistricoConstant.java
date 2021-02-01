@@ -26,7 +26,7 @@ public class DistricoConstant {
 	public static final String SUBAREA = "SubArea";
 
 	public static final String PINCODE = "PinCode";
-	
+
 	public static final String PRODUCT_GROUP = "ProductGroup";
 
 	public static final String PRODUCT = "Product";
@@ -34,6 +34,8 @@ public class DistricoConstant {
 	public static final String PRODUCT_STAGE = "ProductStage";
 
 	public static final String PRODUCT_BRAND = "ProductBrand";
+
+	public static final String PACKING_MEDIUM = "PackingMedium";
 
 	public static final String DASHBOARD = "Dashboard";
 

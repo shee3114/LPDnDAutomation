@@ -16,7 +16,7 @@ public class ProductBrand_OR {
 			.xpath("(//table[contains(@id,'GridViewBrands')]//input[contains(@id,'TextBox')])[1]");
 
 	public static final By editableBrandShortName = By
-			.xpath("//table[contains(@id,'GridViewBrands')]//input[contains(@id,'TextBoxShortName')]	");
+			.xpath("//table[contains(@id,'GridViewBrands')]//input[contains(@id,'TextBoxShortName')]");
 
 	public static final By brandNameColumn = By.xpath("//table[contains(@id,'Brand')]//tr//td[1]");
 }

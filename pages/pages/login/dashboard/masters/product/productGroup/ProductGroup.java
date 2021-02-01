@@ -135,11 +135,17 @@ public class ProductGroup extends BaseComponent {
 		boolean flag = productGroup.addProductGroup(type, productGroupName);
 
 		if (flag) {
-			commonFunctions.verifyNotification("This Product Group already exists !");
-		} else {
-			RESULT.FAIL(
-					"Failed because system is allowed to add 'Product Group' which is already exists in the system. ",
-					true, ScreenshotType.browser);
+			boolean notification = commonFunctions.verifyNotification("This Product Group already exists !");
+
+			if (notification) {
+				RESULT.PASS(
+						"Verified that system is not allowed to add 'Product Group' which is already exists in the system.",
+						true, ScreenshotType.browser);
+			} else {
+				RESULT.FAIL(
+						"Failed because system is allowed to add 'Product Group' which is already exists in the system. ",
+						true, ScreenshotType.browser);
+			}
 		}
 
 		// Refresh the page.

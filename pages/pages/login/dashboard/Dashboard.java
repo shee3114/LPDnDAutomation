@@ -14,6 +14,7 @@ import pages.login.dashboard.masters.addressMaster.country.Country_OR;
 import pages.login.dashboard.masters.addressMaster.pinCode.PinCode_OR;
 import pages.login.dashboard.masters.addressMaster.state.State_OR;
 import pages.login.dashboard.masters.addressMaster.subArea.SubArea_OR;
+import pages.login.dashboard.masters.product.packingMedium.PackingMedium_OR;
 import pages.login.dashboard.masters.product.product.Product_OR;
 import pages.login.dashboard.masters.product.productBrand.ProductBrand_OR;
 import pages.login.dashboard.masters.product.productGroup.ProductGroup_OR;
@@ -74,6 +75,10 @@ public class Dashboard extends BaseComponent {
 		case DistricoConstant.PRODUCT_BRAND:
 			navigateToPage(Shared_OR.mastersMenu, Shared_OR.productMenu, ProductBrand_OR.productBrandMenu);
 			return createObject(DistricoConstant.PRODUCT_BRAND);
+
+		case DistricoConstant.PACKING_MEDIUM:
+			navigateToPage(Shared_OR.mastersMenu, Shared_OR.productMenu, PackingMedium_OR.packingMediumMenu);
+			return createObject(DistricoConstant.PACKING_MEDIUM);
 
 		case DistricoConstant.DASHBOARD:
 			click(Shared_OR.homeMenu);
